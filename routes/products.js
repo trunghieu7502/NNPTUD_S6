@@ -63,7 +63,7 @@ router.post('/', async function(req, res, next) {
                 category: category._id
             });
             await newProduct.save()
-            res.status(201).send({
+            res.status(200).send({
                 success:true,
                 data:newProduct
             });

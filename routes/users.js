@@ -66,7 +66,7 @@ router.post('/', async function (req, res, next) {
       });
       await newUser.save();
       await newUser.populate('role');
-      res.status(200).send({
+      res.status(201).send({
         success: true,
         data: newUser
       });
