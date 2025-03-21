@@ -51,15 +51,21 @@ router.get('/:id', async function (req, res, next) {
 router.post('/', async function (req, res, next) {
   try {
     let body = req.body;
-    let user = await userSchema.findById({ name: body.role });
+    let role = await roleSchema.findById({ name: body.role });
     if (role) {
       let newUser = userSchema({
         username: body.username,
         password: body.password,
         email: body.email,
-        role: role._id
+        fullname: body.fullname || "",
+        role: role._id,
+        avatarURL: body.avatarURL || "",
+        status: false,
+        loginCount: 0,
+        isDeleted: false
       });
-      await newUser.save()
+      await newUser.save();
+      await newUser.populate('role');
       res.status(200).send({
         success: true,
         data: newUser
@@ -68,7 +74,7 @@ router.post('/', async function (req, res, next) {
     else {
       res.status(404).send({
         success: false,
-        message: "User not found"
+        message: "Role not found"
       })
     }
   } catch (error) {
