@@ -1,21 +1,18 @@
-//Nguyễn Trung Hiếu - 2180607502
-
 var express = require('express');
 var router = express.Router();
-let categorySchema = require('../schemas/category')
+let roleSchema = require('../schemas/role')
 
-/* GET users listing. */
 router.get('/', async function(req, res, next) {
-    let categories = await categorySchema.find({});
-    res.send(categories);
+    let roles = await roleSchema.find({});
+    res.send(roles);
 });
 
 router.get('/:id', async function(req, res, next) {
     try {
-        let category = await categorySchema.findById(req.params.id);
+        let role = await roleSchema.findById(req.params.id);
         res.send({
             success:true,
-            data:category
+            data:role
         });
     } catch (error) {
         res.status(404).send({
@@ -28,14 +25,14 @@ router.get('/:id', async function(req, res, next) {
 router.post('/', async function(req, res, next) {
     try {
         let body = req.body;
-        let newCategory = categorySchema({
+        let newRole = roleSchema({
             name:body.name,
             description:body.description?body.description:"",
         });
-        await newCategory.save()
+        await newRole.save()
         res.status(200).send({
             success:true,
-            data:newCategory
+            data:newRole
         });
     } catch (error) {
         res.status(404).send({
@@ -55,10 +52,10 @@ router.put('/:id', async function(req, res, next) {
         if(body.description){
             updatedObj.description = body.description
         }
-        let updatedCategory =  await categorySchema.findByIdAndUpdate(req.params.id,updatedObj,{new:true})
+        let updatedRole =  await roleSchema.findByIdAndUpdate(req.params.id,updatedObj,{new:true})
         res.status(200).send({
             success:true,
-            data:updatedCategory
+            data:updatedRole
         });
     } catch (error) {
         res.status(404).send({
@@ -70,12 +67,12 @@ router.put('/:id', async function(req, res, next) {
 
 router.delete('/:id', async function(req, res, next) {
     try {
-        let updatedCategory =  await categorySchema.findByIdAndUpdate(req.params.id,{
+        let updatedRole =  await roleSchema.findByIdAndUpdate(req.params.id,{
             isDeleted:true
         },{new:true})
         res.status(200).send({
             success:true,
-            data:updatedCategory
+            data:updatedRole
         });
     } catch (error) {
         res.status(404).send({
@@ -84,6 +81,5 @@ router.delete('/:id', async function(req, res, next) {
         })
     }
 });
-
 
 module.exports = router;

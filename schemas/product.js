@@ -20,7 +20,8 @@ let productSchema = mongoose.Schema({
         type:String,
         default:""
     },category:{
-        type:String,
+        type:mongoose.Types.ObjectId,
+        ref:'category',
         required:true
     }
     ,isDeleted:{
@@ -31,4 +32,3 @@ let productSchema = mongoose.Schema({
     timestamps:true
 })
 module.exports = mongoose.model('product',productSchema)
-// Tao 1 schema cho obj category gồm name,description, timestamp

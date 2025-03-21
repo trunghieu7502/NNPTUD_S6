@@ -1,6 +1,6 @@
 let mongoose = require('mongoose');
 
-let categorySchema = mongoose.Schema({
+let roleSchema = mongoose.Schema({
     name:{
         type:String,
         required:true,
@@ -8,8 +8,11 @@ let categorySchema = mongoose.Schema({
     },description:{
         type:String,
         default:""
+    },isDeleted:{
+        type:Boolean,
+        default:false
     }
 },{
     timestamps:true
 })
-module.exports = mongoose.model('category',categorySchema)
+module.exports = mongoose.model('role',roleSchema)
